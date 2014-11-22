@@ -83,11 +83,11 @@ public:
 		// Generate a ray with the given screen coordinates, which you should assume lie in [-1,1]^2
 		// How to do this is described in the lecture notes.
 
-		auto r = point - this->center;
-		auto orig = (this->center + (point.y * this->up) / 2 + (point.x * this->horizontal / 2));
-		orig.normalized();
+		auto d = 1 / FW::tan(this->fov_angle / 2);
+		auto dir = point.x * this->horizontal + point.y*this->up + d * this->direction;
+		dir.normalized();
 
-		return Ray(orig, this->direction);
+		return Ray(this->center, dir);
 	}
 
 	virtual float getTMin() const { 

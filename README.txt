@@ -21,8 +21,8 @@ Did you work on the assignment using Aalto computers, your own computers, or bot
 
 R1 Generating rays & ambient lighting (  1p): done
 R2 Visualizing depth		      (0.5p): done
-R3 Perspective camera		      (0.5p): not done
-R4 Phong shading		      (  3p): not done
+R3 Perspective camera		      (0.5p): done
+R4 Phong shading		      (  3p): attempt
 R5 Plane intersection		      (0.5p): not done
 R6 Triangle intersection	      (  1p): not done
 R7 Shadows			      (  1p): not done
