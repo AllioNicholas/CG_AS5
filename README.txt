@@ -3,8 +3,8 @@
 #
 # Assignment 5: Ray Tracing
 
-Student name:
-Student number:
+Student name: NICHOLAS ALLIO
+Student number: 471794
 Hours spent on requirements (approx.):
 Hours spent on extra credit (approx.):
 
@@ -19,8 +19,8 @@ Did you work on the assignment using Aalto computers, your own computers, or bot
 # effort on them. If you do, explain the work you did in the problems/bugs section
 # and leave your 'attempt' code in place (commented out if necessary) so we can see it.
 
-R1 Generating rays & ambient lighting (  1p): not done
-R2 Visualizing depth		      (0.5p): not done
+R1 Generating rays & ambient lighting (  1p): done
+R2 Visualizing depth		      (0.5p): done
 R3 Perspective camera		      (0.5p): not done
 R4 Phong shading		      (  3p): not done
 R5 Plane intersection		      (0.5p): not done
