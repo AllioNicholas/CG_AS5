@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	auto arg = vector<string>(argv+1, argv+argc);
 	if (arg.empty()) {
 		// Default arguments, used whenever command line arguments are not given.
-		string s = "-input exe/scenes/r1+r2_02_five_spheres.txt -size 400 400 -output exe/debug.png -depth 8 12 exe/debug_depth.png";
+		string s = "-input exe/scenes/r3_spheres_perspective.txt -size 400 400 -output exe/debug.png -depth 8 12 exe/debug_depth.png";
 		istringstream iss(s);
 		arg = vector<string>(istream_iterator<string>(iss), istream_iterator<string>());
 	}
