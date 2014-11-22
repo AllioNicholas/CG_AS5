@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 	auto arg = vector<string>(argv+1, argv+argc);
 	if (arg.empty()) {
 		// Default arguments, used whenever command line arguments are not given.
-		string s = "-input exe/scenes/r1+r2_01_single_sphere.txt -size 400 400 -output exe/debug.png";
+		string s = "-input exe/scenes/r1+r2_02_five_spheres.txt -size 400 400 -output exe/debug.png -depth 8 12 exe/debug_depth.png";
 		istringstream iss(s);
 		arg = vector<string>(istream_iterator<string>(iss), istream_iterator<string>());
 	}
@@ -102,7 +102,7 @@ void render(RayTracer& ray_tracer, SceneParser& scene, const Args& args) {
 	// Accumulate into image
 	
 	// Loop over scanlines.
-	 #pragma omp parallel for // Uncomment this & enable OpenMP in project for parallel rendering (see handout)
+	#pragma omp parallel for // Uncomment this & enable OpenMP in project for parallel rendering (see handout)
 	for (int j = 0; j < args.height; ++j) {
 		// Print progress info
 		if (args.show_progress) ::printf("%.2f%% \r", lines_done * 100.0f / image_pixels.y);
@@ -152,6 +152,8 @@ void render(RayTracer& ray_tracer, SceneParser& scene, const Args& args) {
 					// Here you should map the t range [depth_min, depth_max] to the inverted range [1,0] for visualization
 					// Note that closer objects should appear brighter.
 					float f = 0.0f;
+					if (hit.t >= args.depth_min && hit.t <= args.depth_max)
+						f = 1 - (hit.t - args.depth_min) / (args.depth_max - args.depth_min);
 					depth_image->setVec4f(Vec2i(i, j), Vec4f(Vec3f(f), 1));
 				}
 				if (normals_image) {
