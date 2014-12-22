@@ -85,7 +85,7 @@ public:
 
 		auto d = 1 / FW::tan(this->fov_angle / 2);
 		auto dir = point.x * this->horizontal + point.y*this->up + d * this->direction;
-		dir.normalized();
+		dir.normalize();
 
 		return Ray(this->center, dir);
 	}

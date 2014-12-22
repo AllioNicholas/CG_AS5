@@ -22,22 +22,21 @@ Vec3f PhongMaterial::shade(const Ray &ray, const Hit &hit,
 	// anything if the light is below the local horizon!
 
 	Vec3f answer = Vec3f(0.0f);
-	auto N = hit.normal;
-	auto dot_prod = dot(dir_to_light, N);
+	auto norm = hit.normal;
+	auto dot_prod = dot(dir_to_light, norm);
 	if (dot_prod < 0) { // check for hit from back
 		if (!shade_back) { // no need to render
 			dot_prod = 0;
 		}
 		else { // render hit from back
-			N = -N;
-			dot_prod = dot(dir_to_light, N);
+			norm = -norm;
+			dot_prod = dot(dir_to_light, norm);
 		}
 	}
 
 	//answer = diffuse_color_ * dot_prod * incident_intensity;
-	answer = diffuse_color_ * dot_prod * incident_intensity;
-	Vec3f r_vec;
-	r_vec = -dir_to_light - 2 * dot(-dir_to_light, N)*N;
+	answer = diffuse_color(ray.pointAtParameter(hit.t)) * dot_prod * incident_intensity;
+	Vec3f r_vec = -dir_to_light - 2 * dot(-dir_to_light, norm)*norm;
 	r_vec.normalize();
 	answer += incident_intensity * specular_color_ * FW::pow(clamp(dot(r_vec,-ray.direction),0.0f,FLT_MAX), exponent_);
 	return answer;

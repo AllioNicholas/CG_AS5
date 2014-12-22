@@ -101,8 +101,9 @@ void render(RayTracer& ray_tracer, SceneParser& scene, const Args& args) {
 	// Compute shading
 	// Accumulate into image
 	
+	srand(static_cast <unsigned> (time(0)));
 	// Loop over scanlines.
-	 #pragma omp parallel for // Uncomment this & enable OpenMP in project for parallel rendering (see handout)
+	//#pragma omp parallel for // Uncomment this & enable OpenMP in project for parallel rendering (see handout)
 	for (int j = 0; j < args.height; ++j) {
 		// Print progress info
 		if (args.show_progress) ::printf("%.2f%% \r", lines_done * 100.0f / image_pixels.y);
@@ -146,7 +147,7 @@ void render(RayTracer& ray_tracer, SceneParser& scene, const Args& args) {
 				// For extra credit, you can implement more sophisticated ones, such as "tent" and bicubic
 				// "Mitchell-Netravali" filters. This requires you to implement the addSample()
 				// function in the Film class and use it instead of directly setting pixel values in the image.
-				image->setVec4f(Vec2i(i,j), Vec4f(sample_color, 1));
+				image->setVec4f(Vec2i(i,j), Vec4f(image->getVec4f(Vec2f(i,j)) + Vec4f(sample_color/args.num_samples, 1)));
 				if (depth_image) {
 					// YOUR CODE HERE (R2)
 					// Here you should map the t range [depth_min, depth_max] to the inverted range [1,0] for visualization

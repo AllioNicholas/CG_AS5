@@ -51,7 +51,12 @@ bool Plane::intersect( const Ray& r, Hit& h, float tmin ) const {
 	// (plug in ray)
 	// origin + direction * t = p(t)
 	// origin . normal + t * direction . normal = d;
-	// t = (d - origin . normal) / (direction . normal);	
+	// t = (d - origin . normal) / (direction . normal);
+	float t = (offset() - dot(normal(), r.origin)) / dot(normal(), r.direction);
+	if (t > tmin && h.t > t) {
+		h.set(t, material_, normal_);
+		return true;
+	}
 	return false;
 }
 
@@ -132,6 +137,40 @@ bool Triangle::intersect( const Ray& r, Hit& h, float tmin ) const {
 	// YOUR CODE HERE (R6)
 	// Intersect the triangle with the ray!
 	// Again, pay attention to respecting tmin and h.t!
+	Mat3f A, beta, gamma, tmat;
+	Vec3f un = vertices_[0];
+	Vec3f du = vertices_[1];
+	Vec3f tri = vertices_[2];
+
+	tmat.setCol(0, un - du);
+	tmat.setCol(1, un - tri);
+	tmat.setCol(2, un - r.origin);
+
+	gamma.setCol(0, un - du);
+	gamma.setCol(1, un - r.origin);
+	gamma.setCol(2, r.direction);
+
+	beta.setCol(0, un - r.origin);
+	beta.setCol(1, un - tri);
+	beta.setCol(2, r.direction);
+
+	A.setCol(0, un - du);
+	A.setCol(1, un - tri);
+	A.setCol(2, r.direction);
+
+	float b = det(beta) / det(A);
+	float g = det(gamma) / det(A);
+	float t = det(tmat) / det(A);
+
+	if (b>0 && b+g <1 && g>0) {
+		if (t > tmin && h.t > t){
+			Vec3f norm = cross(du - un, tri - un);
+			norm.normalize();
+			h.set(t, material_, norm);
+			return true;
+		}
+	}
+
 	return false;
 }
 
